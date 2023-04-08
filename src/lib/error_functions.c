@@ -1,14 +1,15 @@
 #include "error_functions.h"
-#include <stdarg.h>
 #include "ename.c.inc" /* Defines ename and MAX_ENAME */
 #include "tlpi_hdr.h"
+#include <stdarg.h>
+
 #ifdef __GNUC__
 __attribute__((__noreturn__))
 #endif
 static void
 terminate(Boolean useExit3)
 {
-    char* s;
+    char *s;
     /* Dump core if EF_DUMPCORE environment variable is defined and
     is a nonempty string; otherwise call exit(3) or _exit(2),
     depending on the value of 'useExit3'. */
@@ -21,8 +22,7 @@ terminate(Boolean useExit3)
         _exit(EXIT_FAILURE);
 }
 
-static void outputError(Boolean useErr, int err, Boolean flushStdout,
-                        const char* format, va_list ap)
+static void outputError(Boolean useErr, int err, Boolean flushStdout, const char *format, va_list ap)
 {
 #define BUF_SIZE 500
 #define SUM_BUF_SIZE 1024
@@ -32,8 +32,7 @@ static void outputError(Boolean useErr, int err, Boolean flushStdout,
     vsnprintf(userMsg, BUF_SIZE, format, ap);
 
     if (useErr)
-        snprintf(errText, BUF_SIZE, " [%s %s]",
-                 (err > 0 && err <= MAX_ENAME) ? ename[err] : "?UNKNOWN?",
+        snprintf(errText, BUF_SIZE, " [%s %s]", (err > 0 && err <= MAX_ENAME) ? ename[err] : "?UNKNOWN?",
                  strerror(err));
     else
         snprintf(errText, BUF_SIZE, ":");
@@ -46,10 +45,10 @@ static void outputError(Boolean useErr, int err, Boolean flushStdout,
     fflush(stderr); /* In case stderr is not line-buffered */
 }
 
-void errMsg(const char* format, ...)
+void errMsg(const char *format, ...)
 {
     va_list argList;
-    int     savedErrno;
+    int savedErrno;
     savedErrno = errno; /* In case we change it here */
     va_start(argList, format);
     outputError(TRUE, errno, TRUE, format, argList);
@@ -57,7 +56,7 @@ void errMsg(const char* format, ...)
     errno = savedErrno;
 }
 
-void errExit(const char* format, ...)
+void errExit(const char *format, ...)
 {
     va_list argList;
     va_start(argList, format);
@@ -66,7 +65,7 @@ void errExit(const char* format, ...)
     terminate(TRUE);
 }
 
-void err_exit(const char* format, ...)
+void err_exit(const char *format, ...)
 {
     va_list argList;
     va_start(argList, format);
@@ -75,7 +74,7 @@ void err_exit(const char* format, ...)
     terminate(FALSE);
 }
 
-void errExitEN(int errnum, const char* format, ...)
+void errExitEN(int errnum, const char *format, ...)
 {
     va_list argList;
     va_start(argList, format);
@@ -84,7 +83,7 @@ void errExitEN(int errnum, const char* format, ...)
     terminate(TRUE);
 }
 
-void fatal(const char* format, ...)
+void fatal(const char *format, ...)
 {
     va_list argList;
     va_start(argList, format);
@@ -93,7 +92,7 @@ void fatal(const char* format, ...)
     terminate(TRUE);
 }
 
-void usageErr(const char* format, ...)
+void usageErr(const char *format, ...)
 {
     va_list argList;
     fflush(stdout); /* Flush any pending stdout */
@@ -105,7 +104,7 @@ void usageErr(const char* format, ...)
     exit(EXIT_FAILURE);
 }
 
-void cmdLineErr(const char* format, ...)
+void cmdLineErr(const char *format, ...)
 {
     va_list argList;
     fflush(stdout); /* Flush any pending stdout */
