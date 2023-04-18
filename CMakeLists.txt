@@ -12,3 +12,4 @@ add_subdirectory(src/lib)
 
 link_libraries(lib)
 add_subdirectory(src/fileio)
+add_subdirectory(src/proc)

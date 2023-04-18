@@ -1,4 +1,12 @@
 {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "xaver.clang-format",
+    
+    "clangd.arguments": [
+        "--clang-tidy"
+    ],
+
+    "files.exclude": {
+        "**/.cache": true
+    },
 }
