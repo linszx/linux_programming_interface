@@ -3,7 +3,8 @@
     "editor.defaultFormatter": "xaver.clang-format",
     
     "clangd.arguments": [
-        "--clang-tidy"
+        "--clang-tidy",
+        "--query-driver=/usr/bin/gcc"
     ],
 
     "files.exclude": {
